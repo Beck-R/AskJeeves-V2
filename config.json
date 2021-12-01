@@ -1,0 +1,12 @@
+{
+  "name": "AskJeeves",
+  "version": "0.5.1",
+  "prefix": "jeeves,",
+  "myToken": "<TOKEN HERE>",
+  "admins": [
+    "358374257593417752"
+  ],
+  "bot_age": {
+    "number": 44
+  }
+}
