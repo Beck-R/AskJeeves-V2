@@ -1,0 +1,6 @@
+.env
+commands/command-assets/kayneQuote/output.png
+node_modules/
+assets/
+logs/
+tsconfig.json/

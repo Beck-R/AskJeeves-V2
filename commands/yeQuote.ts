@@ -1,39 +1,47 @@
-const nodeHtmlToImage = require('node-html-to-image');
-const fetch = require('node-fetch');
+import nodeHtmlToImage = require("node-html-to-image")
+import fetch from "node-fetch";
+import { Message } from "discord.js";
+const { blacklist } = require("../config.json");
 
+// get quote from kanye api
 async function getQuote() {
-    const response = await fetch('https://api.kanye.rest');
-    const json = await response.json();
-  
-    const quote = json.quote;
-    const text = `${quote} - Kayne West AKA. Ye`;
+  const response = await fetch("https://api.kanye.rest");
+  const json = await response.json();
 
-    return text
+  const quote = json.quote;
+  const text = `${quote} - Kayne West AKA. Ye`;
+
+  return text;
 }
 
-module.exports = {
-    name: 'kanye-quote',
-    category: 'fun',
-    description: 'Overlays a random Ye quote over a random sfw/nsfw anime picture from a specified category. To view the different categories go to https://waifu.pics/docs',
-    usage: 'kanye-quote <sfw/nsfw> <category>',
-    example: 'kanye-quote sfw neko',
-    async execute(message, args) {
-        const fw = args[0];
-        const category = args[1];
+export default {
+  name: "ye-quote",
+  category: "fun",
+  description:
+    "Overlays a random Ye quote over a random sfw/nsfw anime picture from a specified category. To view the different categories go to https://waifu.pics/docs",
+  usage: "ye-quote <sfw/nsfw> <category>",
+  example: "ye-quote sfw neko",
+  callback: async (message: Message, ...args: string[]) => {
+    console.log(blacklist);
 
-        const quote = await getQuote();
+    const quote = await getQuote();
 
-        const response = await fetch(`https://api.waifu.pics/${fw}/${category}`);
-        const json = await response.json();
-      
-        const image = json.url;
+    // get waifu image
+    const fw = args[0];
+    const category = args[1];
 
-        console.log(quote);
-        console.log(image);
-    
-        nodeHtmlToImage({
-            output: './commands/command-assets/kayneQuote/output.png',
-            html: `<html>
+    const response = await fetch(`https://api.waifu.pics/${fw}/${category}`);
+    const json = await response.json();
+
+    const image = json.url;
+
+    console.log(quote);
+    console.log(image);
+
+    // create image
+    nodeHtmlToImage({
+      output: "./commands/command-assets/kayneQuote/output.png",
+      html: `<html>
                         <head>
                             <style>
                                 #bg {
@@ -73,10 +81,12 @@ module.exports = {
                                 <div id='quote'>${quote}</div>
                             </div>
                         </body>
-                    </html>`
-        })
-        .then(() => {
-        message.channel.send({files: ['./commands/command-assets/kayneQuote/output.png']})
-        });
-    }
-}
+                    </html>`,
+    }).then(() => {
+      // send constructed image
+      message.channel.send({
+        files: ["./commands/command-assets/kayneQuote/output.png"],
+      });
+    });
+  },
+};

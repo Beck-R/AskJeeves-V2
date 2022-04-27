@@ -1,12 +1,20 @@
 {
-  "name": "AskJeeves",
-  "version": "0.5.1",
-  "prefix": "jeeves,",
-  "myToken": "<TOKEN HERE>",
   "admins": [
     "358374257593417752"
   ],
+  "blacklist": [
+    "356540276799438860",
+    "351102243002515456"
+  ],
   "bot_age": {
-    "number": 44
-  }
+    "number": 190,
+    "unit": "days"
+  },
+  "guilds": [
+    "CoxCableSuccers",
+    "Bot Testing Server",
+    "Based",
+    "Astra Nova but only the cool kids",
+    "BRUH"
+  ]
 }
