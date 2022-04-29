@@ -1,6 +1,6 @@
 import nodeHtmlToImage = require("node-html-to-image")
 import fetch from "node-fetch";
-import { Message } from "discord.js";
+import { Message, TextChannel } from "discord.js";
 const { blacklist } = require("../config.json");
 
 // get quote from kanye api
@@ -18,11 +18,10 @@ export default {
   name: "ye-quote",
   category: "fun",
   description:
-    "Overlays a random Ye quote over a random sfw/nsfw anime picture from a specified category. To view the different categories go to https://waifu.pics/docs",
+    "Overlays a random Ye quote over a random sfw/nsfw anime picture from a specified category. To view the different categories go to https://waifu.pics/docs.",
   usage: "ye-quote <sfw/nsfw> <category>",
   example: "ye-quote sfw neko",
-  callback: async (message: Message, ...args: string[]) => {
-    console.log(blacklist);
+  callback: async (message: Message, channel: TextChannel, ...args: string[]) => {
 
     const quote = await getQuote();
 
@@ -34,9 +33,6 @@ export default {
     const json = await response.json();
 
     const image = json.url;
-
-    console.log(quote);
-    console.log(image);
 
     // create image
     nodeHtmlToImage({

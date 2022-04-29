@@ -1,13 +1,13 @@
 const { admins } = require("../../config.json");
-import { Message } from "discord.js";
+import { Message, TextChannel } from "discord.js";
 
 export default {
   name: "kick",
   category: "moderation",
-  description: "Kicks a user from the server",
+  description: "Kicks a user from the server.",
   usage: "kick <@user> <reason>",
   example: "kick @John Doe Being a jerk",
-  callback: async (message: Message, ...args: string[]) => {
+  callback: async (message: Message, channel: TextChannel,...args: string[]) => {
     if (!message.member) return;
     if (
       admins.includes(message.author.id) ||
@@ -29,7 +29,7 @@ export default {
 
         member.kick(reason);
       } catch (err) {
-        return;
+        console.log(err);
       }
     }
   },
